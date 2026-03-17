@@ -28,7 +28,7 @@ public:
       ll *q = arr[h];
       while (true) {
         if (q->key == key) {
-          q->value = value; // Update existing key
+          q->value = value;
           return;
         }
         if (q->next == NULL)
@@ -47,11 +47,11 @@ public:
     while (p != NULL) {
       if (p->key == key) {
         if (prev == NULL)
-          arr[h] = p->next; // Removing the head
+          arr[h] = p->next;
         else
-          prev->next = p->next; // Removing from middle/end
+          prev->next = p->next;
 
-        delete p; // Use delete, not free!
+        delete p;
         return;
       }
       prev = p;
@@ -64,11 +64,11 @@ public:
     ostringstream os;
     os << key;
     string key1 = os.str();
-    long long m = 1; // was int — overflows after a few iterations
+    long long m = 1;
     for (int i = 0; i < int(key1.size()); i++) {
       h += int(key1[i]) * m;
       h = h % 100000;
-      m = (m * 17) % 100000; // keep m bounded too
+      m = (m * 17) % 100000;
     }
     return (int)h;
   }
@@ -92,16 +92,13 @@ public:
         return p->value;
       p = p->next;
     }
-    // Key not found — insert default and return reference to it
     insert(key, T{});
-    // Now find and return the reference
     p = arr[h];
     while (p != NULL) {
       if (p->key == key)
         return p->value;
       p = p->next;
     }
-    // Should never reach here
     static T default_value;
     return default_value;
   }
